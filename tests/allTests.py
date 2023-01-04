@@ -20,22 +20,22 @@ class Tests(unittest.TestCase):
     def test_checkTop(self):
         # -1 As top shouldn't be allowed
         runner = CliRunner()
-        result = runner.invoke(analizer.analize, "test.txt --top -1".split())
+        result = runner.invoke(analizer.analize, "tests/ressources/test.txt --top -1".split())
         self.assertEqual(2, result.exit_code, "Didn't throw an error with -1 as top")
         runner2 = CliRunner()
-        result2 = runner2.invoke(analizer.analize, "test.txt --top 2".split())
+        result2 = runner2.invoke(analizer.analize, "tests/ressources/test.txt --top 2".split())
         self.assertEqual(0, result2.exit_code, "Did throw an error with 2 as top")
 
     def test_checkModes(self):
         # hello world are modes that shouldn't be allowed
         runner = CliRunner()
-        result = runner.invoke(analizer.analize, "test.txt --modes hello,world".split())
+        result = runner.invoke(analizer.analize, "tests/ressources/test.txt --modes hello,world".split())
         self.assertEqual(
             2, result.exit_code, "Didn't throw an error 2 with unknown modes"
         )
         # all is a mode that should be allowed
         runner2 = CliRunner()
-        result2 = runner2.invoke(analizer.analize, "test.txt --categories all".split())
+        result2 = runner2.invoke(analizer.analize, "tests/ressources/test.txt --categories all".split())
         self.assertEqual(
             0,
             result2.exit_code,
@@ -45,13 +45,13 @@ class Tests(unittest.TestCase):
     def test_checkOutput(self):
         # check for an output not valid
         runner = CliRunner()
-        result = runner.invoke(analizer.analize, "test.txt --output hello".split())
+        result = runner.invoke(analizer.analize, "tests/ressources/test.txt --output hello".split())
         self.assertEqual(
             2, result.exit_code, "Didn't throw an error 2 with unknown output type"
         )
         # check for an output valid
         runner2 = CliRunner()
-        result2 = runner2.invoke(analizer.analize, "test.txt --output html".split())
+        result2 = runner2.invoke(analizer.analize, "tests/ressources/test.txt --output html".split())
         self.assertEqual(
             0, result2.exit_code, "Did throw an error with known output type"
         )
@@ -59,13 +59,13 @@ class Tests(unittest.TestCase):
     def test_checkGeoLoc(self):
         # check for an geoloc invalid
         runner = CliRunner()
-        result = runner.invoke(analizer.analize, "test.txt --ipgeoloc html".split())
+        result = runner.invoke(analizer.analize, "tests/ressources/test.txt --ipgeoloc html".split())
         self.assertEqual(
             2, result.exit_code, "Didn't throw an error 2 with invalid ipgeoloc value"
         )
         # check for an geoloc valid
         runner2 = CliRunner()
-        result2 = runner2.invoke(analizer.analize, "test.txt --ipgeoloc false".split())
+        result2 = runner2.invoke(analizer.analize, "tests/ressources/test.txt --ipgeoloc false".split())
         self.assertEqual(
             0, result2.exit_code, "Did throw an error with valid ipgeoloc value"
         )
@@ -73,7 +73,7 @@ class Tests(unittest.TestCase):
     def test_checkReqTreshold(self):
         # check for an ReqTreshold invalid
         runner = CliRunner()
-        result = runner.invoke(analizer.analize, "test.txt --reqtreshold false".split())
+        result = runner.invoke(analizer.analize, "tests/ressources/test.txt --reqtreshold false".split())
         self.assertEqual(
             2,
             result.exit_code,
@@ -81,7 +81,7 @@ class Tests(unittest.TestCase):
         )
         # check for an ReqTreshold valid
         runner2 = CliRunner()
-        result2 = runner2.invoke(analizer.analize, "test.txt --reqtreshold 1".split())
+        result2 = runner2.invoke(analizer.analize, "tests/ressources/test.txt --reqtreshold 1".split())
         self.assertEqual(
             0, result2.exit_code, "Did throw an error with valid ReqTreshold value"
         )

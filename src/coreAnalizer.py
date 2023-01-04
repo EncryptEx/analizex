@@ -33,7 +33,7 @@ def readData(filename, reqTreshold):
                     lastTimestamp = IpsTimestamps.get(ip, None)
                     # get difference between last ip's request
                     if (
-                        lastTimestamp != None
+                        lastTimestamp is not None
                         and row.time.timestamp() - lastTimestamp < reqTreshold
                     ):
                         # last req was also from itself
@@ -68,7 +68,7 @@ def consoleOutput(cachedData, top, modes, wantsIpGeoLoc, reqTreshold):
         if wantsIpGeoLoc:
             header = ["Times", "IP", "IP Country"]
         table_ip.header(header)
-        for i in range(top):
+        for i in range(top if len(topIPs) > top else len(topIPs)):
             times, ip = topIPs[i]
             dataToAppend = [times, ip]
             if wantsIpGeoLoc:
@@ -83,7 +83,7 @@ def consoleOutput(cachedData, top, modes, wantsIpGeoLoc, reqTreshold):
         if wantsIpGeoLoc:
             header = ["Req. " + str(reqTreshold) + '" between', "IP", "IP Country"]
         table_enum.header(header)
-        for i in range(top):
+        for i in range(top if len(enum) > top else len(enum)):
             times, ip = enum[i]
             dataToAppend = [times, ip]
             if wantsIpGeoLoc:
@@ -95,11 +95,11 @@ def consoleOutput(cachedData, top, modes, wantsIpGeoLoc, reqTreshold):
         click.echo("\n## Wordpress directory enumeration trials (top " + str(top) + ")")
         table_wp = Texttable()
         table_wp.header(["Times", "Path"])
-        l = 0
+        urisAdded = 0
         for i in range(len(topPaths)):
             times, uri = topPaths[i]
-            if uri.startswith("/wp") and l <= top:
-                l += 1
+            if uri.startswith("/wp") and urisAdded <= top:
+                urisAdded += 1
                 table_wp.add_row([times, uri])
         click.echo(table_wp.draw())
 
