@@ -155,5 +155,4 @@ cython_debug/
 # custom files and folders
 insp/
 log.txt
-test.txt
 .vscode/
